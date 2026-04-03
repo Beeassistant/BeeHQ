@@ -29,14 +29,14 @@
 <body>
   <div class="container">
     <div class="thank-you-card">
-      <h1>Thank You for Your Purchase!</h1>
-      <p class="subtitle">Your report is ready and has been emailed to you.</p>
+      <h1 id="thankYouTitle">Thank You for Your Purchase!</h1>
+      <p class="subtitle" id="thankYouSubtitle">Your report is ready and has been emailed to you.</p>
 
       <div class="report-display" id="reportDisplay">
         <h2>Loading Report...</h2>
         <p class="report-content">Please wait a moment while your report loads. If it doesn't appear, check your email!</p>
       </div>
-      <p class="email-note">Didn't receive the email? Check your spam folder or contact <a href="mailto:bee.assistant1@gmail.com">bee.assistant1@gmail.com</a>.</p>
+      <p class="email-note" id="emailNote">Didn't receive the email? Check your spam folder or contact <a href="mailto:bee.assistant1@gmail.com">bee.assistant1@gmail.com</a>.</p>
       <a href="index.html" class="btn-home">← Back to Side Hustle Lab</a>
     </div>
   </div>
@@ -49,17 +49,36 @@
 
       let purchasedReportName = localStorage.getItem('purchasedReportName');
       let customerEmail = localStorage.getItem('customerEmailForDelivery');
+      const urlParams = new URLSearchParams(window.location.search);
+      const isFree = urlParams.get('free') === '1';
+      const reportLinkParam = urlParams.get('link') || '';
+
+      // Update title/subtitle for free orders
+      if (isFree) {
+        document.getElementById('thankYouTitle').textContent = 'You Got It! 🎁';
+        document.getElementById('thankYouSubtitle').textContent = 'Here is your free report — 100% free, no catch.';
+        document.getElementById('emailNote').innerHTML = 'Having trouble accessing the report? <a href="mailto:bee.assistant1@gmail.com">bee.assistant1@gmail.com</a>';
+      }
 
       // For security, ideally, report content should be fetched server-side based on session ID
       // But for this static site, we will display content based on localStorage and a simple fetch
 
       if (purchasedReportName) {
+        // For free orders, show a direct link to the report
+        if (isFree && reportLinkParam) {
+          reportDisplay.innerHTML = `
+            <h2 style="margin-bottom:12px;">🎉 Your Free Report is Ready!</h2>
+            <p style="color: var(--text-dim); margin-bottom:20px;">Here's the link to your free report:</p>
+            <a href="${reportLinkParam}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;background:var(--accent-grad);color:white;border-radius:var(--radius-sm);font-size:1rem;font-weight:700;text-decoration:none;margin-bottom:20px;">📄 Open Your Report →</a>
+            <p style="color: var(--text-dim); font-size:0.85rem; margin-top:8px;">Link will open in a new tab. We also sent it to your email.</p>
+          `;
+          return;
+        }
+
         let reportFilePath = '';
-        // Special handling for Custom Report
         if (purchasedReportName === 'Custom Side Hustle Report') {
-          reportFilePath = 'reports/paid/custom-report-placeholder.html'; // Placeholder for custom report
+          reportFilePath = 'reports/paid/custom-report-placeholder.html';
         } else {
-          // Standard paid reports
           const normalizedName = purchasedReportName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
           reportFilePath = `reports/paid/${normalizedName}-2026.html`;
         }

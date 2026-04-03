@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎁 All Reports FREE for 24 Hours — Side Hustle Lab</title>
+<meta name="description" content="Get every side hustle validation report completely free for 24 hours. No catch. Enter your email and get instant access.">
+<meta property="og:title" content="🎁 All Reports FREE for 24 Hours — Side Hustle Lab">
+<meta property="og:description" content="Get every side hustle validation report completely free. Real data, honest verdicts. 100% free for the next 24 hours.">
+<style>
+  :root {
+    --bg: #0a0a0f; --bg2: #111118; --bg3: #1a1a24; --text: #f0f0f5; --text-dim: #8888a0;
+    --accent: #7c3aed; --accent2: #a855f7; --accent-grad: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    --accent-bg: rgba(124,58,237,0.1); --border: rgba(255,255,255,0.08); --card-bg: #111118;
+    --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --radius: 12px; --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont,'Segoe UI',sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; min-height: 100vh; }
+  .container { max-width: 700px; margin: 0 auto; padding: 40px 20px 60px; }
+  a { color: var(--accent2); text-decoration: none; } a:hover { text-decoration: underline; }
+  .hero { text-align: center; padding: 40px 0; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: var(--success); border-radius: 100px; padding: 6px 16px; font-size: 0.85rem; font-weight: 700; margin-bottom: 24px; }
+  .hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 16px; }
+  .hero h1 .highlight { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 520px; margin: 0 auto 32px; }
+  .countdown { display: flex; justify-content: center; gap: 16px; margin-bottom: 40px; }
+  .countdown-item { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 20px; text-align: center; min-width: 72px; }
+  .countdown-item .num { font-size: 2rem; font-weight: 800; background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .countdown-item .label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+  .reports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .report-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: left; transition: border-color 0.2s; }
+  .report-card:hover { border-color: var(--accent); }
+  .report-card .tag { display: inline-block; background: rgba(16,185,129,0.12); color: var(--success); font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; margin-bottom: 8px; }
+  .report-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .report-card p { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 0; }
+  .email-capture { background: linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(124,58,237,0.05) 100%); border: 1px solid rgba(16,185,129,0.2); border-radius: var(--radius); padding: 40px; text-align: center; }
+  .email-capture h3 { font-size: 1.4rem; margin-bottom: 8px; }
+  .email-capture .sub { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 24px; }
+  .email-form { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 440px; margin: 0 auto; }
+  .email-form input { flex: 1; min-width: 200px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 1rem; color: var(--text); font-family: inherit; outline: none; transition: border-color 0.2s; }
+  .email-form input:focus { border-color: var(--success); }
+  .email-form button { padding: 14px 24px; background: var(--accent-grad); border: none; border-radius: var(--radius-sm); color: white; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; font-family: inherit; white-space: nowrap; }
+  .email-form button:hover { opacity: 0.9; }
+  .email-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .success-state { display: none; background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); border-radius: var(--radius); padding: 32px; text-align: center; }
+  .success-state.show { display: block; }
+  .success-state h3 { color: var(--success); font-size: 1.3rem; margin-bottom: 8px; }
+  .success-state p { color: var(--text-dim); font-size: 0.9rem; }
+  .success-state .check-icon { font-size: 3rem; margin-bottom: 12px; }
+  .reports-note { text-align: center; color: var(--text-dim); font-size: 0.82rem; margin-top: 16px; }
+  .how-it-works { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 40px; }
+  .how-it-works h2 { font-size: 1.3rem; margin-bottom: 20px; text-align: center; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+  .step { text-align: center; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-bg); border: 1px solid var(--accent); color: var(--accent2); font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
+  .step h4 { font-size: 0.95rem; margin-bottom: 4px; }
+  .step p { font-size: 0.8rem; color: var(--text-dim); }
+  footer { text-align: center; padding: 30px 0; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-dim); }
+  footer a { color: var(--text-dim); } footer a:hover { color: var(--text); }
+  @media (max-width: 480px) { .hero h1 { font-size: 2rem; } .countdown { gap: 8px; } .countdown-item { padding: 12px 14px; min-width: 60px; } .countdown-item .num { font-size: 1.5rem; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="badge">🎁 100% FREE — LIMITED TIME</div>
+    <h1>All Reports Are <span class="highlight">FREE</span> Right Now</h1>
+    <p>No credit card. No catch. Just instant access to every side hustle validation report on Side Hustle Lab. For the next 24 hours, everything is free.</p>
+    <div class="countdown" id="countdown">
+      <div class="countdown-item"><div class="num" id="hours">24</div><div class="label">Hours</div></div>
+      <div class="countdown-item"><div class="num" id="minutes">00</div><div class="label">Minutes</div></div>
+      <div class="countdown-item"><div class="num" id="seconds">00</div><div class="label">Seconds</div></div>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2>How to Claim Your Free Reports</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h4>Enter Your Email</h4><p>Type your email below to unlock all reports</p></div>
+      <div class="step"><div class="step-num">2</div><h4>Choose Your Reports</h4><p>Pick any 3 reports you want to read</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Get Instant Access</h4><p>Links sent to your email immediately</p></div>
+    </div>
+  </div>
+
+  <div class="reports-grid">
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>Vibe Coding (AI App Building)</h3>
+      <p>Low barrier to entry. Real path to first product in 1-3 months.</p>
+    </div>
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>UGC Creation</h3>
+      <p>$50–$500/video. Fastest path to your first dollar.</p>
+    </div>
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>Affiliate Marketing</h3>
+      <p>$15B industry. What separates the 5% who win from the 95% who quit.</p>
+    </div>
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>Niche Newsletter</h3>
+      <p>Genuine path to $1K–$10K/month. Long ramp-up but real.</p>
+    </div>
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>Print on Demand</h3>
+      <p>85-95% margins. Crowded but winnable in the right niche.</p>
+    </div>
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>Website Development</h3>
+      <p>From zero to client-ready in weeks. Real demand, global reach.</p>
+    </div>
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>AI Agents / Automation</h3>
+      <p>Solving real business problems. High demand, growing market.</p>
+    </div>
+    <div class="report-card">
+      <div class="tag">FREE</div>
+      <h3>Custom Report</h3>
+      <p>Any side hustle idea. AI-researched just for you.</p>
+    </div>
+  </div>
+
+  <div class="email-capture" id="captureSection">
+    <h3>Unlock All Free Reports</h3>
+    <p class="sub">Enter your email below and choose up to 3 reports. Links sent instantly to your inbox.</p>
+    <form class="email-form" id="emailForm">
+      <input type="email" id="userEmail" placeholder="your@email.com" required>
+      <button type="submit" id="submitBtn">Get Free Access →</button>
+    </form>
+    <p class="reports-note">🔒 No payment required. 100% free for the next 24 hours.</p>
+
+    <div class="success-state" id="successState">
+      <div class="check-icon">✅</div>
+      <h3>You're In!</h3>
+      <p>Check your inbox — your free report links are on their way. If you don't see them in 2 minutes, check your spam folder.</p>
+      <p style="margin-top:12px;">Want to choose your specific reports? <a href="index.html">Go to Side Hustle Lab →</a></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>🐝 Built by <strong>Bee</strong> · <a href="index.html">Side Hustle Lab</a> · <a href="mailto:bee.assistant1@gmail.com">Contact</a></p>
+  </footer>
+</div>
+
+<script>
+  // Countdown timer — 24 hours from now (stored so it's consistent across page loads)
+  function initCountdown() {
+    const endKey = 'free24h_end';
+    let endTime = parseInt(localStorage.getItem(endKey));
+    if (!endTime) {
+      endTime = Date.now() + 24 * 60 * 60 * 1000;
+      localStorage.setItem(endKey, endTime);
+    }
+
+    function update() {
+      const now = Date.now();
+      const remaining = Math.max(0, endTime - now);
+      const hours = Math.floor(remaining / (1000 * 60 * 60));
+      const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+    update();
+    setInterval(update, 1000);
+  }
+  initCountdown();
+
+  // Email capture
+  document.getElementById('emailForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('userEmail').value.trim();
+    const btn = document.getElementById('submitBtn');
+    if (!email) return;
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    // Save to leads list
+    const leads = JSON.parse(localStorage.getItem('shl_leads') || '[]');
+    const already = leads.find(l => l.email === email);
+    if (!already) {
+      leads.push({
+        email,
+        source: 'free24h',
+        date: new Date().toISOString(),
+        code: 'FREE24H',
+        reportsSelected: []
+      });
+      localStorage.setItem('shl_leads', JSON.stringify(leads));
+    }
+
+    // Also save for this session's delivery
+    localStorage.setItem('free24h_email', email);
+    localStorage.setItem('free24h_code', 'FREE24H');
+
+    // Show success
+    document.getElementById('emailForm').style.display = 'none';
+    document.getElementById('captureSection').querySelector('.sub').style.display = 'none';
+    document.getElementById('captureSection').querySelector('.reports-note').style.display = 'none';
+    document.getElementById('successState').classList.add('show');
+    btn.textContent = 'Get Free Access →';
+  });
+</script>
+</body>
+</html>
