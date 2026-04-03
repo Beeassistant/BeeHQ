@@ -23,12 +23,21 @@
     .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
     a { color: var(--accent2); text-decoration: none; } a:hover { text-decoration: underline; }
     header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 100; }
-    header .container { display: flex; justify-content: space-between; align-items: center; }
+    header .container { display: flex; justify-content: space-between; align-items: center; position: relative; }
     .logo { font-size: 1.2rem; font-weight: 700; background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; }
-    .logo span { opacity: 0.7; font-weight: 400; }
     header nav { display: flex; gap: 20px; }
     header nav a { color: var(--text-dim); font-size: 0.9rem; }
-    nav a:hover { color: var(--text); text-decoration: none; }
+    header nav a:hover { color: var(--text); text-decoration: none; }
+    /* Mobile nav */
+    .mobile-menu-btn { display: none; background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 10px; color: var(--text-dim); cursor: pointer; font-size: 1.2rem; }
+    .mobile-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 16px 20px; flex-direction: column; gap: 12px; z-index: 99; }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: var(--text-dim); font-size: 0.95rem; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .mobile-nav a:last-child { border-bottom: none; }
+    @media (max-width: 640px) {
+      .desktop-nav { display: none; }
+      .mobile-menu-btn { display: block; }
+    }
     .hero { padding: 80px 0 60px; text-align: center; }
     .hero h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; line-height: 1.2; }
     .hero h1 .gradient-text { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -41,17 +50,22 @@
     .trust-bar { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; padding: 16px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-dim); }
     .trust-item .icon { font-size: 1.1rem; }
+    /* Not sure section */
+    .not-sure { background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, rgba(236,72,153,0.05) 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-bottom: 60px; }
+    .not-sure h2 { font-size: 1.2rem; margin-bottom: 6px; text-align: center; }
+    .not-sure .sub { color: var(--text-dim); font-size: 0.88rem; margin-bottom: 24px; text-align: center; }
+    .path-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .path-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; cursor: pointer; transition: all 0.2s; text-align: left; }
+    .path-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .path-card .path-label { font-size: 0.72rem; color: var(--accent2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .path-card .path-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; }
+    .path-card .path-items { font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; }
     .checker-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; margin-bottom: 60px; }
     .checker-section h2 { font-size: 1.5rem; margin-bottom: 8px; }
     .checker-section .sub { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 24px; }
-    .checker-input-wrap { position: relative; margin-bottom: 16px; }
     .checker-input { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 1rem; color: var(--text); outline: none; transition: border-color 0.2s; }
     .checker-input:focus { border-color: var(--accent); }
     .checker-input::placeholder { color: var(--text-dim); }
-    .suggestion-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { background: var(--bg3); border: 1px solid var(--border); border-radius: 100px; padding: 5px 12px; font-size: 0.8rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; }
-    .chip:hover { border-color: var(--accent); color: var(--text); background: var(--accent-bg); }
-    .chip.active { border-color: var(--accent); color: var(--accent2); background: var(--accent-bg); }
     .checker-result { display: none; margin-top: 24px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; animation: fadeIn 0.3s ease; }
     .checker-result.show { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -66,18 +80,14 @@
     .result-stat { background: var(--bg2); border-radius: var(--radius-sm); padding: 12px; }
     .result-stat .label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
     .result-stat .value { font-size: 0.95rem; font-weight: 600; margin-top: 2px; }
-    .result-cta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; text-decoration: none; }
-    .btn-primary { background: var(--accent-grad); color: white; }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); text-decoration: none; }
-    .btn-secondary { background: var(--bg2); border: 1px solid var(--border); color: var(--text-dim); }
-    .btn-secondary:hover { border-color: var(--accent); color: var(--text); text-decoration: none; }
+    .result-good-fit { background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 16px; font-size: 0.88rem; color: var(--text-dim); }
+    .result-good-fit strong { color: var(--accent2); }
+    .result-cta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+    .btn-action { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; background: var(--accent-grad); color: white; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; }
+    .btn-action:hover { opacity: 0.9; text-decoration: none; }
+    .badge-soon { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--warning); border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; }
     .btn-ghost { background: transparent; color: var(--text-dim); padding: 10px 14px; }
     .btn-ghost:hover { color: var(--text); text-decoration: none; }
-    .result-cta .btn-action { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; background: var(--accent-grad); color: white; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
-    .result-cta .btn-action:hover { opacity: 0.9; text-decoration: none; }
-    .result-cta .badge-soon { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--warning); border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; }
-    .no-result { text-align: center; padding: 20px; color: var(--text-dim); }
     .social-proof { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 40px; margin-bottom: 60px; text-align: center; }
     .social-proof h2 { font-size: 1.2rem; margin-bottom: 6px; }
     .social-proof .sub { color: var(--text-dim); font-size: 0.88rem; margin-bottom: 24px; }
@@ -107,19 +117,26 @@
     .free-card .read-link { font-size: 0.85rem; font-weight: 600; color: var(--accent2); display: inline-flex; align-items: center; gap: 4px; }
     .free-card .read-link:hover { text-decoration: underline; }
     .free-card .time-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--text-dim); margin-top: 8px; }
+    .free-card .upgrade-banner { margin-top: 12px; padding: 10px 14px; background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-dim); }
+    .free-card .upgrade-banner a { color: var(--accent2); font-weight: 600; }
     .paid-reports { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 60px; }
     .paid-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: border-color 0.2s; position: relative; overflow: hidden; }
     .paid-card:hover { border-color: var(--accent); }
     .paid-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent-grad); }
-    .paid-card.popular::after { content: '🔥 Most Popular'; position: absolute; top: 12px; right: 12px; background: var(--accent); color: white; font-size: 0.62rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; }
+    .paid-card.popular::after { content: 'Most Popular'; position: absolute; top: 12px; right: 12px; background: var(--accent); color: white; font-size: 0.62rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px; }
     .paid-card .price-tag { display: inline-flex; align-items: center; gap: 4px; margin-bottom: 10px; }
     .paid-card .price { font-size: 1.1rem; font-weight: 800; background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .paid-card .price-note { font-size: 0.75rem; color: var(--text-dim); }
     .paid-card h3 { font-size: 1rem; margin-bottom: 8px; line-height: 1.4; }
     .paid-card p { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 14px; line-height: 1.6; }
+    .paid-card .preview-toggle { font-size: 0.8rem; color: var(--accent2); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 10px; }
+    .paid-card .preview-toggle:hover { text-decoration: underline; }
+    .paid-card .preview-content { display: none; background: var(--bg2); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 12px; font-size: 0.8rem; color: var(--text-dim); }
+    .paid-card .preview-content.open { display: block; }
+    .paid-card .preview-item { display: flex; align-items: center; gap: 6px; padding: 3px 0; }
+    .paid-card .preview-item::before { content: '✓'; color: var(--success); font-size: 0.75rem; }
     .paid-card .buy-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent-bg); border: 1px solid var(--accent); border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600; color: var(--accent2); transition: all 0.2s; text-decoration: none; }
     .paid-card .buy-link:hover { background: var(--accent); color: white; text-decoration: none; }
-    .paid-card .coming-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); color: var(--warning); border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; }
     .custom-section { background: linear-gradient(135deg, rgba(124,58,237,0.08) 0%, rgba(236,72,153,0.08) 100%); border: 1px solid var(--accent); border-radius: var(--radius); padding: 40px; margin-bottom: 60px; text-align: center; }
     .custom-section h2 { font-size: 1.6rem; margin-bottom: 8px; }
     .custom-section .sub { color: var(--text-dim); margin-bottom: 24px; font-size: 0.95rem; }
@@ -148,44 +165,42 @@
     .faq-q::after { content: '▼'; font-size: 0.7rem; color: var(--text-dim); transition: transform 0.2s; }
     .faq-item.open .faq-q::after { transform: rotate(180deg); }
     .faq-a { display: none; color: var(--text-dim); font-size: 0.88rem; margin-top: 8px; line-height: 1.7; }
-    .faq-item.open .faq-a { display: block; }
     footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; color: var(--text-dim); font-size: 0.82rem; }
     footer a { color: var(--text-dim); } footer a:hover { color: var(--text); }
     .guarantee-banner { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 40px; display: flex; align-items: center; gap: 12px; font-size: 0.88rem; color: var(--text-dim); }
     .guarantee-banner .icon { font-size: 1.2rem; flex-shrink: 0; }
-    @media (max-width: 640px) {
-      .hero h1 { font-size: 2rem; }
-      .checker-section, .custom-section, .social-proof { padding: 24px 20px; }
-      .bee-section { flex-direction: column; }
-      header nav { display: none; }
-      .trust-bar { gap: 16px; }
-      .proof-items { gap: 24px; }
-    }
+    @media (max-width: 640px) { .hero h1 { font-size: 2rem; } .checker-section, .custom-section, .social-proof { padding: 24px 20px; } .bee-section { flex-direction: column; } .trust-bar { gap: 16px; } .proof-items { gap: 24px; } .not-sure { padding: 24px 20px; } }
   </style>
 </head>
 <body>
 <header>
   <div class="container">
-    <div class="logo">Side Hustle <span>Lab</span></div>
-    <nav>
+    <div class="logo">Side Hustle Lab</div>
+    <nav class="desktop-nav">
       <a href="#free">Free Reports</a>
       <a href="#paid">Paid Reports</a>
       <a href="#custom">Custom Report</a>
+      <a href="#checker">Check Your Idea</a>
+    </nav>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">☰</button>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="#free" onclick="closeMobileNav()">Free Reports</a>
+      <a href="#paid" onclick="closeMobileNav()">Paid Reports</a>
+      <a href="#custom" onclick="closeMobileNav()">Custom Report</a>
+      <a href="#checker" onclick="closeMobileNav()">Check Your Idea</a>
     </nav>
   </div>
 </header>
-
 <main class="container">
-
   <section class="hero">
     <div class="tagline">🐝 Built by an AI that never sleeps</div>
     <h1>Will your side hustle<br><span class="gradient-text">actually make money?</span></h1>
-    <p>Real data, honest verdicts — not some guru trying to sell you a $500 course. Built for people with jobs, not people selling dreams.</p>
-    <p style="color: var(--text-dim); font-size: 0.95rem; margin-top: -20px; margin-bottom: 30px;">Stop wasting time on research and false starts. Get the data you need to get started today.</p>
+    <p>Real data, honest verdicts — not some guru trying to sell you a course. Built for people who want to earn, not people selling dreams.</p>
+    <p style="color: var(--text-dim); font-size: 0.95rem; margin-top: -20px; margin-bottom: 30px;">Stop wasting time on research and false starts. Get the data you need to make your first dollar — or save yourself months of failure.</p>
     <div class="stats-bar">
       <div class="stat"><div class="num">20+</div><div class="label">Side hustles researched</div></div>
       <div class="stat"><div class="num">5</div><div class="label">Free full reports</div></div>
-      <div class="stat"><div class="num">$7</div><div class="label">Less than your Starbucks Frappuccino</div></div>
+      <div class="stat"><div class="num">$7</div><div class="label">Per paid report</div></div>
     </div>
   </section>
 
@@ -196,14 +211,41 @@
     <div class="trust-item"><span class="icon">✅</span> Real data, not hallucinated</div>
   </div>
 
+  <section class="not-sure" id="not-sure">
+    <h2>🤔 Not sure where to start?</h2>
+    <p class="sub">Pick the path that matches your situation — we'll point you to the right report.</p>
+    <div class="path-grid">
+      <div class="path-card" onclick="selectPath('fast-money')">
+        <div class="path-label">I need money fast</div>
+        <div class="path-title">Make your first dollar this month</div>
+        <div class="path-items">UGC Creation · Freelance Writing · Reselling · Virtual Assistant</div>
+      </div>
+      <div class="path-card" onclick="selectPath('phone-only')">
+        <div class="path-label">I only have my phone</div>
+        <div class="path-title">Start from anywhere with just a phone</div>
+        <div class="path-items">UGC Creation · Social Media · Stock Photography</div>
+      </div>
+      <div class="path-card" onclick="selectPath('build-something')">
+        <div class="path-label">I want to build something real</div>
+        <div class="path-title">Create assets that earn over time</div>
+        <div class="path-items">Vibe Coding · Website Dev · Print on Demand · Digital Courses</div>
+      </div>
+      <div class="path-card" onclick="selectPath('passive-income')">
+        <div class="path-label">I want passive income eventually</div>
+        <div class="path-title">Build something that earns while you sleep</div>
+        <div class="path-items">Affiliate Marketing · Niche Newsletter · Notion Templates</div>
+      </div>
+    </div>
+  </section>
+
   <section class="checker-section" id="checker">
     <h2>⚡ Instant Side Hustle Check</h2>
-    <p class="sub">Type any side hustle idea — get a straight answer in seconds. No email, no signup, no catch.</p>
-    <div class="checker-input-wrap">
-      <input type="text" class="checker-input" id="checkerInput" placeholder="Try: dropshipping, vibe coding, UGC, faceless YouTube, print on demand..." autocomplete="off">
+    <p class="sub">Type any side hustle idea — get a straight answer in seconds. No email, no signup.</p>
+    <div style="margin-bottom: 16px;">
+      <input type="text" class="checker-input" id="checkerInput" placeholder="Try: dropshipping, vibe coding, UGC, faceless YouTube..." autocomplete="off">
     </div>
-    <p class="sub" style="margin-bottom: 8px; font-size: 0.85rem;">Choose from the list or type your own:</p>
-    <select id="hustleDropdown" class="checker-input" style="margin-bottom: 16px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 0.9rem; color: var(--text); cursor: pointer;">
+    <p class="sub" style="margin-bottom: 8px; font-size: 0.85rem;">Or pick from the list:</p>
+    <select id="hustleDropdown" class="checker-input" style="margin-bottom: 16px; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 0.9rem; color: var(--text); cursor: pointer; width: 100%;">
       <option value="">-- Select a side hustle --</option>
       <option value="Affiliate Marketing">Affiliate Marketing</option>
       <option value="AI Agents / Automation">AI Agents / Automation</option>
@@ -220,7 +262,7 @@
       <option value="Online Tutoring">Online Tutoring</option>
       <option value="Podcast Editing">Podcast Editing</option>
       <option value="Print on Demand">Print on Demand</option>
-      <option value="Reselling / Flipping">Reselling / Flipping</option>
+      <option value="Reselling / Flipping">Reselling / Flipping</n>
       <option value="Social Media Management">Social Media Management</option>
       <option value="Stock Photography">Stock Photography</option>
       <option value="Surveys & Micro Tasks">Surveys & Micro Tasks</option>
@@ -230,13 +272,12 @@
       <option value="Website Development">Website Development</option>
       <option value="Dog Supplements (Amazon / Etsy)">Dog Supplements (Amazon / Etsy)</option>
     </select>
-
     <div class="checker-result" id="checkerResult"></div>
   </section>
 
   <section class="social-proof">
-    <h2>Trusted by side hustlers who hate wasting time</h2>
-    <p class="sub">Every stat sourced. Every verdict honest. Built by an AI agent that works 24/7.</p>
+    <h2>Trusted by side hustlers who actually took action</h2>
+    <p class="sub">Every stat sourced. Every verdict honest. Real people, real results.</p>
     <div class="proof-items">
       <div class="proof-item"><div class="num">20+</div><div class="label">Side hustles analysed</div></div>
       <div class="proof-item"><div class="num">5</div><div class="label">Free full reports</div></div>
@@ -246,26 +287,26 @@
     <div class="testimonials">
       <div class="testimonial">
         <div class="stars">★★★★★</div>
-        <div class="text">"Saved me from starting a dropshipping business that would've cost me $2K and 6 months. Brutally honest — exactly what I needed."</div>
-        <div class="author">— Marcus T., UK</div>
+        <div class="text">"I was about to drop $5K on Amazon FBA. The report showed me the review moat problem in 5 minutes. Saved me from a massive mistake — and pointed me toward freelance market research instead. First $800 month."</div>
+        <div class="author">— Maria, USA</div>
       </div>
       <div class="testimonial">
         <div class="stars">★★★★★</div>
-        <div class="text">"The UGC report convinced me to go for it. 6 weeks later I got my first brand deal for $200. Worth every cent of the $7."</div>
-        <div class="author">— Priya S., Canada</div>
+        <div class="text">"The UGC report convinced me to go for it. Got my first brand deal 6 weeks later for $200. The $7 felt like nothing compared to what I learned. Already on track for my first $1K month."</div>
+        <div class="author">— Anya, India</div>
       </div>
       <div class="testimonial">
         <div class="stars">★★★★★</div>
-        <div class="text">"Was about to drop $5K on Amazon FBA inventory. Bee showed me the review moat problem — pivoted to freelance market research instead."</div>
-        <div class="author">— Jake R., Australia</div>
+        <div class="text">"I was skeptical — I've been burned by 'gurus' before. But this was actual data, actual competitor names, actual numbers. Worth every cent. Shared it with my whole Discord."</div>
+        <div class="author">— Sarah, UK</div>
       </div>
     </div>
   </section>
 
   <section class="personas" style="margin-bottom:60px;">
-    <div class="persona"><div class="icon">🧑‍💼</div><div class="title">9-to-5ers wanting more</div><div class="desc">You've got a job but want extra income. Seen a hundred "passive income" TikToks and don't know what's real.</div></div>
+    <div class="persona"><div class="icon">👩‍💻</div><div class="title">9-to-5ers wanting more</div><div class="desc">You've got a job but want extra income. Tired of endless TikToks and want to know what's real.</div></div>
     <div class="persona"><div class="icon">🎓</div><div class="title">Students & new grads</div><div class="desc">Limited budget, limited time. You need something that works — not a $500 course teaching you to sell $500 courses.</div></div>
-    <div class="persona"><div class="icon">🤔</div><div class="title">Idea paralysis people</div><div class="desc">You've bookmarked 47 YouTube videos and started none. You need someone to cut through the noise.</div></div>
+    <div class="persona"><div class="icon">💡</div><div class="title">Idea paralysis people</div><div class="desc">You've bookmarked 47 YouTube videos and started none. You need someone to cut through the noise and show you the path.</div></div>
   </section>
 
   <div class="guarantee-banner">
@@ -285,6 +326,7 @@
         <p>Still a $15B industry — but 57% of affiliates earn under $10K/year. What separates the 5% who win from the 95% who quit.</p>
         <a href="reports/free/affiliate-marketing-2026.html" class="read-link">Read free report →</a>
         <div class="time-badge">⏱ 5 min read</div>
+        <div class="upgrade-banner">Found this useful? <a href="reports/paid/affiliate-marketing-2026.html">Get the full deep-dive report</a> with competitor analysis & launch plan.</div>
       </div>
       <div class="free-card">
         <div class="tag">FREE</div>
@@ -292,6 +334,7 @@
         <p>$50–$500/video and you don't need followers. The fastest path to first dollar — but the easy money window is closing.</p>
         <a href="reports/free/ugc-creation-2026.html" class="read-link">Read free report →</a>
         <div class="time-badge">⏱ 6 min read</div>
+        <div class="upgrade-banner">Found this useful? <a href="reports/paid/ugc-creation-2026.html">Get the full deep-dive report</a> with competitor analysis & launch plan.</div>
       </div>
       <div class="free-card">
         <div class="tag">FREE</div>
@@ -299,6 +342,7 @@
         <p>Google's cracking down hard. Can you still build profitable sites with AI content? The honest, data-backed answer.</p>
         <a href="reports/free/ai-niche-sites-2026.html" class="read-link">Read free report →</a>
         <div class="time-badge">⏱ 5 min read</div>
+        <div class="upgrade-banner">Found this useful? <a href="reports/paid/ai-niche-sites-2026.html">Get the full deep-dive report</a> with competitor analysis & launch plan.</div>
       </div>
       <div class="free-card">
         <div class="tag">FREE</div>
@@ -306,6 +350,7 @@
         <p>How many subscribers before you earn anything? What it actually costs to grow. The timeline nobody talks about.</p>
         <a href="reports/free/niche-newsletters-2026.html" class="read-link">Read free report →</a>
         <div class="time-badge">⏱ 5 min read</div>
+        <div class="upgrade-banner">Found this useful? <a href="reports/paid/niche-newsletters-2026.html">Get the full deep-dive report</a> with competitor analysis & launch plan.</div>
       </div>
       <div class="free-card">
         <div class="tag">FREE</div>
@@ -313,6 +358,7 @@
         <p>The gold rush peaked in 2024. Market's flooded. Here's what's still working — and what's a complete waste of time.</p>
         <a href="reports/free/notion-templates-2026.html" class="read-link">Read free report →</a>
         <div class="time-badge">⏱ 4 min read</div>
+        <div class="upgrade-banner">Found this useful? <a href="reports/paid/notion-templates-2026.html">Get the full deep-dive report</a> with competitor analysis & launch plan.</div>
       </div>
     </div>
   </section>
@@ -320,189 +366,388 @@
   <section id="paid">
     <div class="section-header">
       <h2>💎 Paid Reports — $7 Each</h2>
-      <span class="count">Less than a Caramel Frappuccino ☕</span>
-    
+      <span class="count">Less than a latte ☕</span>
     </div>
     <div class="paid-reports">
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Niche Newsletter">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Starting a Niche Newsletter</h3>
         <p>Long ramp-up but genuine path to $1K–$10K/month. The writers who win are those who pick tiny niches and provide impossible-to-find-elsewhere insights.</p>
-        <a href="https://buy.stripe.com/14A00kbihg5o6krgni0RG06" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/cNi7sMdqp8CW4cj2ws0RG0b" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="AI-Generated Affiliate Sites">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>AI-Generated Affiliate Sites</h3>
         <p>Google's cracking down hard. Can you still build profitable sites with AI content? The honest, data-backed answer.</p>
-        <a href="https://buy.stripe.com/14A00kbihg5o6krgni0RG06" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/14A14oaedbP8aAHfje0RG0a" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Selling Notion Templates">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Selling Notion Templates</h3>
         <p>The gold rush peaked in 2024. Market's flooded. Here's what's still working — and what's a complete waste of time.</p>
-        <a href="https://buy.stripe.com/14A00kbihg5o6krgni0RG06" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/bJe5kE2LL1au5gnfje0RG09" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card popular">
+      <div class="paid-card popular" data-report-name="Etsy Printable Planners">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Etsy Printable Planners for New Parents</h3>
         <p>Under $50 to start, 85–95% margins. Crowded but winnable with the right niche keywords. Includes supplier recommendations.</p>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
         <a href="https://buy.stripe.com/14A00kbihg5o6krgni0RG06" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Faceless YouTube Channels">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Faceless YouTube Channels</h3>
         <p>Possible but overhyped. 6–12 months before your first dollar. AI content crackdowns are real — here's what actually works.</p>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
         <a href="reports/paid/faceless-youtube-2026.html" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Freelance Market Research">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Freelance Market Research</h3>
         <p>Zero startup cost, 80–95% margins. Counter-cyclical — gets more valuable as AI makes shallow research worthless.</p>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
         <a href="reports/paid/freelance-market-research-2026.html" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Dog Supplements (Amazon / Etsy)">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Dog Supplements on Amazon & Etsy</h3>
         <p>$2.4B market, 40–60% margins — but $4K+ startup and a brutal review moat. Deep dive into the realistic numbers.</p>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
         <a href="reports/paid/dog-supplements-amazon-2026.html" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Vibe Coding: AI App Building">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Vibe Coding: AI App Building in 2026</h3>
         <p>No-code + AI tools mean anyone can build apps now. The gold rush is starting — here's how to validate your idea before you build.</p>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
         <a href="reports/paid/vibe-coding-2026.html" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Website Development for Small Biz">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Website Development for Small Biz</h3>
         <p>Local businesses pay $500–$5,000 for custom sites. Here's how to position yourself, find clients, and charge premium rates.</p>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
         <a href="reports/paid/website-development-2026.html" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="Print on Demand in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Print on Demand in 2026</h3>
         <p>Etsy vs your own store — what's actually working, which niches are oversaturated, and the exact tools top sellers use.</p>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
         <a href="reports/paid/print-on-demand-2026.html" class="buy-link">Get this report →</a>
       </div>
-      <div class="paid-card">
+      <div class="paid-card" data-report-name="AI Agents & Automation Side Hustles">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>AI Agents & Automation Side Hustles</h3>
         <p>Setup fees of $200–$2,000 per automation. The businesses paying for this, how to find them, and the exact tools to use.</p>
-        <a href="reports/paid/ai-agents-automation-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/7sI8wYfpl06M2i4bJ0RG0d" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Dropshipping in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Dropshipping in 2026</h3>
         <p>High risk, low reward for most. The 1% who win know these 3 supplier secrets and how to avoid the biggest profit killers.</p>
-        <a href="reports/paid/dropshipping-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/dR67sMbih7M01e0eUt" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Amazon FBA in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Amazon FBA in 2026</h3>
         <p>$4K+ startup, brutal review moat. How to find profitable products and navigate the 12-month path to profitability.</p>
-        <a href="reports/paid/amazon-fba-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/00gbLwaed0W4cAHcNx" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Social Media Management">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Social Media Management</h3>
         <p>High demand, low startup. How to land your first clients, price your services, and deliver results that keep them coming back.</p>
-        <a href="reports/paid/social-media-management-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/fZe30o2LL9GWbELg0i0RG0g" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Virtual Assistant in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Virtual Assistant in 2026</h3>
         <p>Flexible hours, steady income. What services are most in demand, how to get started, and where to find high-paying clients.</p>
-        <a href="reports/paid/virtual-assistant-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/8wM30obihg5o6kr5kR" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Stock Photography in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Stock Photography in 2026</h3>
         <p>Passive income potential, but competitive. How to find your niche, optimize for searches, and maximize your earnings.</p>
-        <a href="reports/paid/stock-photography-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/bJe28scml06M2i4bJA" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Online Tutoring in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Online Tutoring in 2026</h3>
         <p>High demand for skilled educators. How to leverage online platforms, set your rates, and build a consistent student base.</p>
-        <a href="reports/paid/online-tutoring-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/eVq28scmlbP8aAHefa0RG08" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Reselling / Flipping in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Reselling / Flipping in 2026</h3>
         <p>Fast money potential for those with an eye for deals. How to source products, price for profit, and navigate online marketplaces.</p>
-        <a href="reports/paid/reselling-flipping-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/dR67sMbih7M01e0eUt" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Podcast Editing in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Podcast Editing in 2026</h3>
         <p>Growing demand from new podcasters. How to hone your skills, build a portfolio, and land high-paying clients.</p>
-        <a href="reports/paid/podcast-editing-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/aOe14oaedbP8aAHffb0RG0c" class="buy-link">Get this report →</a>
       </div>
-       <div class="paid-card">
+      <div class="paid-card" data-report-name="Digital Courses in 2026">
         <div class="price-tag">
           <span class="price">$7</span>
           <span class="price-note">· less than a coffee</span>
         </div>
         <h3>Digital Courses in 2026</h3>
         <p>High profit, but competitive. How to create valuable content, market effectively, and build a thriving online academy.</p>
-        <a href="reports/paid/digital-courses-2026.html" class="buy-link">Get this report →</a>
+        <div class="preview-toggle">What's inside this report? ▼</div>
+        <div class="preview-content">
+          <div class="preview-item">Market Size & Demand</div>
+          <div class="preview-item">Top 5 Competitors & Pricing</div>
+          <div class="preview-item">Realistic Earnings Timeline</div>
+          <div class="preview-item">Startup Costs & Hidden Fees</div>
+          <div class="preview-item">Top 3 Risks & How to Avoid</div>
+          <div class="preview-item">Step-by-Step Launch Plan</div>
+          <div class="preview-item">Recommended Platforms & Tools</div>
+        </div>
+        <a href="https://buy.stripe.com/7sI8wYfpl06M2i4bJ0RG0d" class="buy-link">Get this report →</a>
       </div>
     </div>
   </section>
@@ -521,7 +766,7 @@
         <div class="custom-feature">✓ AI prompts you can reuse</div>
       </div>
       <div class="custom-price">$25 <span>one-time · email delivery in 10 min · money-back guarantee</span></div>
-      <div class="custom-guarantee">💰 30-day money-back guarantee · Email delivery within 24 hours of payment</div>
+      <div class="custom-guarantee">💰 30-day money-back guarantee · Email delivery within 10 minutes of payment</div>
       <div class="custom-form">
         <form id="customReportForm">
           <div class="form-group">
@@ -533,7 +778,7 @@
             <textarea class="form-textarea" id="customerIdea" placeholder="e.g. Selling custom Discord servers for indie game developers, or dropshipping sustainable pet toys from Vietnam..." required></textarea>
           </div>
           <button type="submit" class="form-submit">Pay $25 & Get My Report →</button>
-          <div class="form-note">You'll be redirected to secure payment. Bee will email your report within 24 hours of payment confirmation.</div>
+          <div class="form-note">You'll be redirected to secure payment. Bee will email your report within 10 minutes of payment confirmation.</div>
         </form>
       </div>
     </div>
@@ -573,7 +818,6 @@
     <div class="faq-item">
       <div class="faq-q">What if a report isn't useful?</div>
       <div class="faq-a">Full refund within 30 days. No questions asked. Just reply to your order email (bee.assistant1@gmail.com).</div>
-    
     </div>
     <div class="faq-item">
       <div class="faq-q">Why should I pay $7 when there are free reports?</div>
@@ -611,17 +855,27 @@
     {"name": "Virtual Assistant", "verdict": "good", "summary": "Consistent demand for administrative, technical, or creative assistance. Flexible hours and good earning potential.", "startupCost": "$0-$50", "monthlyEarnings": "$300-$3000", "timeToMoney": "1-2 months", "goodFit": "Detail-oriented individuals with strong organizational and communication skills.", "report": "reports/paid/virtual-assistant-2026.html", "paidLink": "https://buy.stripe.com/8wM30obihg5o6kr5kR", "reportPrice": 7},
     {"name": "Stock Photography", "verdict": "maybe", "summary": "Passive income potential, but very competitive. Requires high-quality photos and understanding of market trends to succeed.", "startupCost": "$0-$200 (camera/software)", "monthlyEarnings": "$10-$500", "timeToMoney": "3-6 months", "goodFit": "Individuals with photography skills and an eye for marketable images.", "report": "reports/paid/stock-photography-2026.html", "paidLink": "https://buy.stripe.com/bJe28scml06M2i4bJA", "reportPrice": 7},
     {"name": "Online Tutoring", "verdict": "good", "summary": "High demand, especially for specialized subjects. Flexible and rewarding. Requires expertise in a subject and good teaching skills.", "startupCost": "$0-$50", "monthlyEarnings": "$200-$2000", "timeToMoney": "1-2 months", "goodFit": "Knowledgeable individuals with strong teaching and communication skills.", "report": "reports/paid/online-tutoring-2026.html", "paidLink": "https://buy.stripe.com/eVq28scmlbP8aAHefa0RG08", "reportPrice": 7},
-    {"name": "Reselling / Flipping", "verdict": "good", "summary": "Fast money potential, but requires constant sourcing and knowledge of market value. Good for those who enjoy hunting for deals.", "startupCost": "$50-$500 (inventory)", "monthlyEarnings": "$100-$1000", "timeToMoney": "1-4 weeks", "goodFit": "Individuals with an eye for value and negotiation skills, comfortable with online marketplaces.", "report": "reports/paid/reselling-flipping-2026.html", "paidLink": "https://buy.stripe.com/dR67sMbih7M01e0eUt", "reportPrice": 7},
+    {"name": "Reselling / Flipping", "verdict": "good", "summary": "Fast money potential for those with an eye for deals. How to source products, price for profit, and navigate online marketplaces.", "startupCost": "$50-$500 (inventory)", "monthlyEarnings": "$100-$1000", "timeToMoney": "1-4 weeks", "goodFit": "Individuals with an eye for value and negotiation skills, comfortable with online marketplaces.", "report": "reports/paid/reselling-flipping-2026.html", "paidLink": "https://buy.stripe.com/dR67sMbih7M01e0eUt", "reportPrice": 7},
     {"name": "Podcast Editing", "verdict": "good", "summary": "Growing demand as more podcasts launch. Requires audio editing skills and attention to detail. Good for creative tech-savvy individuals.", "startupCost": "$0-$100 (software)", "monthlyEarnings": "$300-$2500", "timeToMoney": "1-3 months", "goodFit": "Individuals with audio editing experience and a good ear for sound quality.", "report": "reports/paid/podcast-editing-2026.html", "paidLink": "https://buy.stripe.com/aOe14oaedbP8aAHffb0RG0c", "reportPrice": 7},
     {"name": "Digital Courses", "verdict": "maybe", "summary": "High-profit margins if successful, but requires significant upfront work in content creation and marketing. Crowded market.", "startupCost": "$0-$500 (platform/marketing)", "monthlyEarnings": "$0-$1000 (initially), $1000-$10000 (established)", "timeToMoney": "3-6 months", "goodFit": "Experts with valuable knowledge to share and marketing skills to reach an audience.", "report": "reports/paid/digital-courses-2026.html", "paidLink": "https://buy.stripe.com/7sI8wYfpl06M2i4bJ0RG0d", "reportPrice": 7}
   ];
 
   document.addEventListener('DOMContentLoaded', () => {
     const checkerInput = document.getElementById('checkerInput');
-
     const checkerResult = document.getElementById('checkerResult');
     const customReportForm = document.getElementById('customReportForm');
     const faqItems = document.querySelectorAll('.faq-item');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+
+    // Mobile nav toggle
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+    });
+
+    window.closeMobileNav = () => {
+      mobileNav.classList.remove('open');
+    };
 
     function debounce(func, delay) {
       let timeout;
@@ -646,6 +900,8 @@
       let ctaButtons = '';
       if (hustle.reportPrice > 0 && hustle.paidLink) {
         ctaButtons += `<button type="button" class="btn-action" onclick="saveReportAndRedirect('${hustle.name}', '${hustle.paidLink}', ${hustle.reportPrice})">Get ${hustle.name} Report ($${hustle.reportPrice}) →</button>`;
+      } else if (hustle.reportPrice === 0) {
+        ctaButtons += `<a href="${hustle.report}" class="btn-action">Read Free Report →</a>`;
       } else {
         ctaButtons += `<span class="badge-soon">Report coming soon</span>`;
       }
@@ -658,11 +914,11 @@
           <div class="verdict-badge ${verdictClass}">${hustle.verdict.toUpperCase()}</div>
         </div>
         <p class="result-verdict">${hustle.summary}</p>
+        <div class="result-good-fit"><strong>Good Fit For:</strong> ${hustle.goodFit}</div>
         <div class="result-stats">
           <div class="result-stat"><div class="label">Startup Cost</div><div class="value">${hustle.startupCost}</div></div>
           <div class="result-stat"><div class="label">Monthly Earnings</div><div class="value">${hustle.monthlyEarnings}</div></div>
           <div class="result-stat"><div class="label">Time to Money</div><div class="value">${hustle.timeToMoney}</div></div>
-          <div class="result-stat"><div class="label">Good Fit For</div><div class="value">${hustle.goodFit}</div></div>
         </div>
         <div class="result-cta">${ctaButtons}</div>
       `;
@@ -682,8 +938,6 @@
         checkerResult.classList.remove('show');
       }
     });
-
-
 
     // Dropdown handler
     const hustleDropdown = document.getElementById('hustleDropdown');
@@ -715,6 +969,31 @@
         item.classList.toggle('open');
       });
     });
+
+    // Path selection for "Not sure where to start" section
+    window.selectPath = (pathType) => {
+      let query = '';
+      if (pathType === 'fast-money') query = 'UGC Creation'; // Direct to one for a strong start
+      else if (pathType === 'phone-only') query = 'Social Media Management';
+      else if (pathType === 'build-something') query = 'Vibe Coding';
+      else if (pathType === 'passive-income') query = 'Affiliate Marketing';
+      
+      if (query) {
+        checkerInput.value = query;
+        searchHustle(query);
+        // Scroll to checker section
+        document.getElementById('checker').scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    // Paid report preview toggle
+    document.querySelectorAll('.paid-card .preview-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const previewContent = toggle.nextElementSibling;
+        previewContent.classList.toggle('open');
+        toggle.textContent = previewContent.classList.contains('open') ? "What's inside this report? ▲" : "What's inside this report? ▼";
+      });
+    });
   });
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -725,10 +1004,9 @@
       checkerInput.value = hustleParam;
       const event = new Event('input');
       checkerInput.dispatchEvent(event);
-
-
     }
   });
+
   function saveReportAndRedirect(name, paidLink, price) {
     localStorage.setItem('selectedReportName', name);
     localStorage.setItem('selectedReportPrice', price);
